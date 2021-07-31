@@ -1,0 +1,124 @@
+* {
+    padding: 0;
+    margin: 0;
+    z-index: 1;
+    font-family: 'Roboto Mono', monospace;
+}
+
+body {
+    background-color: black;
+}
+
+
+#note-text {
+    background-color: black;
+    color: white;
+    width: 98%;
+    height: 88vh;
+    resize: none;
+    border: none;
+    font-size: 18pt;
+    padding-top: 0.5vh;
+    padding-left: 1%;
+    padding-right: 1%;
+}
+
+
+.btn {
+    margin-left: 7px;
+    margin-right: 7px;
+    cursor: pointer;
+}
+
+.cross {
+    font-size: 15pt;
+}
+
+.btn:hover {
+    color: white;
+}
+
+#note-text:focus {
+    outline: none;
+}
+
+.titlebar {
+    -webkit-user-select: none;
+    width: 100%;
+    height: 10vh;
+    background-color: #269514;
+    display: flex;
+    flex-direction: row;
+    font-size: 10pt;
+    line-height: 10vh;
+}
+
+#page-controlls {
+    display: flex;
+    flex-direction: row;
+}
+
+.drag-zone {
+    flex-grow: 10;
+    -webkit-app-region: drag;
+}
+
+#note-text::-webkit-scrollbar {
+    width: 8px;
+}
+#note-text::-webkit-scrollbar-track {
+    background: #515251;
+}
+#note-text::-webkit-scrollbar-thumb {
+    background-color: #A5A5A5;
+}
+
+.hidden {
+    display: none !important;
+}
+
+#deleteQuestion {
+    position: absolute;
+    width: 80vw;
+    left: 10vw;
+    height: 50vh;
+    top: 25vh;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+#deleteQuestion h1 {
+    font-size: 18pt;
+    text-align: center;
+}
+
+.btns {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+#deleteQuestion button {
+    height: 30px;
+    width: 40%;
+    background-color: black;
+    color: white;
+    font-size: 12pt;
+    border: solid 1px;
+}
+
+#deleteQuestion button:hover {
+    background-color: white;
+    color: black;
+}
+
+#backgroundBloker {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background-color: transparent;
+    z-index: 2;
+    -webkit-user-select: none;
+}

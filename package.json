@@ -1,0 +1,14 @@
+{
+  "name": "sticker-notes",
+  "version": "1.0.0",
+  "description": "notes app",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Zhandos Kipshakbaev",
+  "license": "MIT",
+  "dependencies": {
+    "electron": "^13.1.7"
+  }
+}

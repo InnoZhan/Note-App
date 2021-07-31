@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Notes</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap" rel="stylesheet"> 
+</head>
+<body onload="loadData()">
+    <div id="backgroundBloker" class="hidden">
+        <div id="deleteQuestion">
+            <h1>Are you sure you want to delete this note?</h1>
+            <div class="btns">
+                <button onclick="deleteNote(true)">Yes</button>
+                <button onclick="deleteNote(false)">No</button>
+            </div>
+        </div>
+    </div>
+    <div class='titlebar'>
+        <div id="page-controlls">
+            <div class="arrow btn" onclick="prevPage()"><h1><</h1></div>
+            <h1 id="page-number">/10</h1>
+            <div class="arrow btn" onclick="nextPage()"><h1>></h1></div>
+        </div>
+        <div class="drag-zone"></div>
+        <div class="btn cross" onclick="askDeletion()"><h1>×</h1></div>
+        <div class="btn cross" onclick="newPage()"><h1>+</h1></div>
+    </div>
+    <Textarea id="note-text"></Textarea>
+</body>
+<script>
+    const {ipcRenderer} = require('electron');
+    const dataFile = "data.json";
+    var fs = require('fs');
+
+    var numberOfPages = 0;
+    var currentPage = 0;
+    var pageContent = [];
+    
+    function deleteNote(bool) {
+        if (bool) {
+            pageContent.splice(currentPage, 1);
+            if (pageContent.length == 0) {
+                pageContent.push("");
+            }
+            numberOfPages = pageContent.length;
+            if (currentPage >= numberOfPages) {
+                currentPage = numberOfPages - 1;
+            }
+            refreshScreen();
+        }
+        if (! document.getElementById('backgroundBloker').classList.contains('hidden')) {
+            document.getElementById('backgroundBloker').classList.add('hidden');
+        }
+    }
+
+    function askDeletion() {
+        if (document.getElementById('backgroundBloker').classList.contains('hidden')) {
+            document.getElementById('backgroundBloker').classList.remove('hidden');
+        }
+    }
+
+    function refreshScreen() {
+        document.getElementById("page-number").textContent = (currentPage + 1) + "/" + numberOfPages;
+        document.getElementById("note-text").value = pageContent[currentPage];
+    }
+
+    function newPage() {
+        pageContent[currentPage] = document.getElementById("note-text").value;
+        pageContent.push("");
+        numberOfPages = pageContent.length;
+        currentPage = numberOfPages - 1;
+        refreshScreen();
+    }
+    
+    function loadData() {
+        if (fs.existsSync(dataFile)) {
+            fs.readFile(dataFile, 'utf-8', (err, data) => {
+            if(err){
+                return;
+            }
+            var mydata = JSON.parse(data);
+            numberOfPages = mydata.numberOfPages;
+            pageContent = mydata.pageContent;
+            refreshScreen();
+        });
+        } else {
+            numberOfPages = 1;
+            pageContent = [""];
+            refreshScreen();
+        }
+    }
+
+    function prevPage() {
+        if (currentPage - 1 >= 0) {
+            pageContent[currentPage] = document.getElementById("note-text").value;
+            currentPage--;
+            refreshScreen();
+        }
+    }
+
+    function nextPage() {
+        if (currentPage + 1 < numberOfPages) {
+            pageContent[currentPage] = document.getElementById("note-text").value;
+            currentPage++;
+            refreshScreen();
+        }
+    }
+    
+    ipcRenderer.on('app-close', _ => {
+        pageContent[currentPage] = document.getElementById("note-text").value;
+        fs.writeFile(dataFile, JSON.stringify({
+                numberOfPages,
+                pageContent
+            }, null, 2), 
+            (err) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
+        }); 
+
+        ipcRenderer.send('closed');
+    });
+
+</script>
+</html>
