@@ -6,19 +6,19 @@
 }
 
 body {
-    background-color: black;
+    background-color: white;
+    height: 100%;
 }
 
-
 #note-text {
-    background-color: black;
-    color: white;
+    background-color: white;
+    color: black;
     width: 98%;
-    height: 88vh;
+    height: calc(100vh - 50px);
     resize: none;
     border: none;
     font-size: 18pt;
-    padding-top: 0.5vh;
+    /* padding-top: 0.5vh; */
     padding-left: 1%;
     padding-right: 1%;
 }
@@ -45,12 +45,14 @@ body {
 .titlebar {
     -webkit-user-select: none;
     width: 100%;
-    height: 10vh;
-    background-color: #269514;
+    height: 45px;
+    /* background-color: #269514; */
+    background-color: black;
+    color: white;
     display: flex;
     flex-direction: row;
     font-size: 10pt;
-    line-height: 10vh;
+    line-height: 45px;
 }
 
 #page-controlls {
@@ -81,9 +83,10 @@ body {
     position: absolute;
     width: 80vw;
     left: 10vw;
-    height: 50vh;
-    top: 25vh;
-    background-color: white;
+    height: 40vh;
+    top: 30vh;
+    background-color: black;
+    color: white;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -101,11 +104,11 @@ body {
 }
 
 #deleteQuestion button {
-    height: 30px;
+    height: 40px;
     width: 40%;
     background-color: black;
     color: white;
-    font-size: 12pt;
+    font-size: 14pt;
     border: solid 1px;
 }
 

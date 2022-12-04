@@ -12,19 +12,20 @@ let status = 0;
 // Listen for app to be ready
 app.on('ready', function() {
     // Create new window
-    
+
     mainWindow = new BrowserWindow({
         width: 400,
         height: 400,
+        minWidth: 400,
+        minHeight: 400,
         frame: false,
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
         }});
-    mainWindow.setResizable(false);
     // Load html into window
     mainWindow.loadURL(url.format({
-        pathname: path.join(__dirname, 'mainWindow.html'),
+        pathname: path.join(__dirname, 'index.html'),
         protocol: 'file:',
         slashes: true
     }));
@@ -36,7 +37,7 @@ app.on('ready', function() {
             }
         }
     })
-    
+
 });
 
 

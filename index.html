@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap" rel="stylesheet"> 
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap" rel="stylesheet">
 </head>
 <body onload="loadData()">
     <div id="backgroundBloker" class="hidden">
@@ -37,7 +37,7 @@
     var numberOfPages = 0;
     var currentPage = 0;
     var pageContent = [];
-    
+
     function deleteNote(bool) {
         if (bool) {
             pageContent.splice(currentPage, 1);
@@ -73,7 +73,7 @@
         currentPage = numberOfPages - 1;
         refreshScreen();
     }
-    
+
     function loadData() {
         if (fs.existsSync(dataFile)) {
             fs.readFile(dataFile, 'utf-8', (err, data) => {
@@ -107,19 +107,19 @@
             refreshScreen();
         }
     }
-    
+
     ipcRenderer.on('app-close', _ => {
         pageContent[currentPage] = document.getElementById("note-text").value;
         fs.writeFile(dataFile, JSON.stringify({
                 numberOfPages,
                 pageContent
-            }, null, 2), 
+            }, null, 2),
             (err) => {
             if (err) {
                 console.log(err);
                 return;
             }
-        }); 
+        });
 
         ipcRenderer.send('closed');
     });
